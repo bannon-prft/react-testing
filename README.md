@@ -30,7 +30,7 @@ test('description of test', () => {
   // Arrange
   render(<SomeComponentJSX />)
   // Act
-  // ...nothing
+  userEvent.click(<someClickableElement/>)
   // Assert
   const someElement = screen.getByText(/regular expression text/i)
   expect(someElement).toBeInTheDocument()
@@ -42,3 +42,14 @@ use `queryByText` for finding things that should NOT be there, as it returns nul
 `find...` queries return a promise, so use for async
 
 [Available HTML Roles](https://www.w3.org/TR/html-aria/#docconformance)
+
+avoid testing functions that have not been written by you (e.g. `fetch`)
+- use mocks by overwriting functions with `jest.fn()`
+
+```js
+window.fetch = jest.fn()
+window.fetch.mockResolvedValueOnce({
+  json: async () => []
+})
+```
+
